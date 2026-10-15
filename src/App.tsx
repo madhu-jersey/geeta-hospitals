@@ -3,6 +3,7 @@ import {
   ArrowDown, ArrowLeft, ArrowRight, ArrowUp, ArrowUpRight, Camera, Check, Clock3, ExternalLink, Eye,
   HeartPulse, MapPin, Menu, Phone, ShieldCheck, Stethoscope, UsersRound, X,
 } from 'lucide-react';
+import { SiFacebook, SiInstagram, SiYoutube } from 'react-icons/si';
 import { galleryImages, galleryPlaceholders, doctorImages, heroImage, type ImageRecord } from './data/images';
 import { ReviewsSection } from './components/OptionalContent';
 import { reviewsData } from './data/content';
@@ -14,6 +15,11 @@ const DIRECTIONS = 'https://www.google.com/maps/dir/?api=1&destination=16.757287
 const GOOGLE_REVIEWS = 'https://www.google.com/maps/place/Geeta+Hospitals/@16.7572875,81.6771406,840m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3a37b70016182313:0x7fc7fde69b1ce9fd!8m2!3d16.7572875!4d81.6771406!16s%2Fg%2F11z5pn7nlj';
 const ADDRESS = 'D.No. 22-7-2/1, Vinnakota Vari Street, Tanuku, West Godavari, Andhra Pradesh 534211.';
 const TELUGU = 'గీతా హాస్పటల్స్';
+const SOCIAL_LINKS = [
+  { name: 'Instagram', href: 'https://www.instagram.com/geetahospital365?exln=MTdicndudnQ2M3lsZw==', Icon: SiInstagram },
+  { name: 'Facebook', href: 'https://www.facebook.com/share/1G69djgB3u/', Icon: SiFacebook },
+  { name: 'YouTube', href: 'https://m.youtube.com/@GeetaHospitals/videos', Icon: SiYoutube },
+];
 const insurancePartners = [
   'Star Health',
   'HDFC ERGO',
@@ -145,6 +151,14 @@ function Brand({ footer = false }: { footer?: boolean }) {
   );
 }
 
+function SocialLinks({ className }: { className: string }) {
+  return <div className={className} role="group" aria-label="Social media">
+    {SOCIAL_LINKS.map(({ name, href, Icon }) => <a key={name} href={href} target="_blank" rel="noopener noreferrer" aria-label={`Geeta Hospitals on ${name}`} title={name}>
+      <Icon aria-hidden="true" />
+    </a>)}
+  </div>;
+}
+
 function Header({ active }: { active: string }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -178,7 +192,9 @@ function Header({ active }: { active: string }) {
         <nav id="main-navigation" className={`nav ${menuOpen ? 'is-open' : ''}`} aria-label="Main navigation">
           {nav.map(([id, text]) => <a key={id} className={active === id ? 'active' : ''} href={`#${id}`} onClick={() => setMenuOpen(false)}>{text}</a>)}
         </nav>
+        <SocialLinks className="header-social header-social-desktop" />
         <div className="header-actions">
+          <SocialLinks className="header-social header-social-mobile" />
           <button className="header-menu-toggle" type="button" aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={menuOpen} aria-controls="main-navigation" onClick={() => setMenuOpen((open) => !open)}>
             {menuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
           </button>
@@ -670,7 +686,7 @@ function Footer() {
       <div className="footer-grid">
         <div data-reveal><div className="footer-brandrow"><Brand footer /></div><p className="footer-muted">Tanuku, West Godavari, Andhra Pradesh</p><p className="footer-muted">Run by Sri Geeta Health Care Private Limited</p></div>
         <div data-reveal><h3>Explore</h3><div className="footer-links"><a href="#services" onClick={e => {e.preventDefault();scroll('services');}}>Services</a><a href="#doctors" onClick={e => {e.preventDefault();scroll('doctors');}}>Doctors</a><a href="#visit" onClick={e => {e.preventDefault();scroll('visit');}}>Visit us</a><a href="#gallery" onClick={e => {e.preventDefault();scroll('gallery');}}>Gallery</a><a href="#faq" onClick={e => {e.preventDefault();scroll('faq');}}>FAQs</a></div></div>
-        <div data-reveal><h3>Connect</h3><div className="footer-links"><a className="button outline footer-action" href={PHONE}><Phone size={16} />Call now</a><a className="button outline footer-action" href={DIRECTIONS} target="_blank" rel="noopener noreferrer"><MapPin size={16} />Get directions <ArrowUpRight size={14} /></a><a href="mailto:geetahospitals@gmail.com">geetahospitals@gmail.com</a></div></div>
+        <div data-reveal><h3>Connect</h3><div className="footer-links"><a className="button outline footer-action" href={PHONE}><Phone size={16} />Call now</a><a className="button outline footer-action" href={DIRECTIONS} target="_blank" rel="noopener noreferrer"><MapPin size={16} />Get directions <ArrowUpRight size={14} /></a><a href="mailto:geetahospitals@gmail.com">geetahospitals@gmail.com</a><h3 className="footer-social-title">Follow us</h3><SocialLinks className="footer-social" /></div></div>
       </div>
       <p className="footer-copyright">&copy; {currentYear || 2026} Geeta Hospitals | geetahospitalstanuku.com. All rights reserved.</p>
     </div>
