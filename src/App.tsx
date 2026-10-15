@@ -621,7 +621,6 @@ function Gallery() {
 
 function Visit({ open }: { open: boolean }) {
   const sectionRef = useRevealGroup<HTMLElement>();
-  const [mapActive, setMapActive] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
   return <section ref={sectionRef} id="visit" className="section visit-section">
     <div className="container">
@@ -636,9 +635,9 @@ function Visit({ open }: { open: boolean }) {
           </div>
         </div>
         <div className="visit-map">
-          <div data-reveal className={`map-card ${mapActive ? 'map-active' : ''} ${mapLoaded ? 'map-loaded' : ''}`} onClick={() => setMapActive(true)} onMouseLeave={() => setMapActive(false)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setMapActive(true); } if (event.key === 'Escape') setMapActive(false); }} role="group" tabIndex={0} aria-label="Interactive map. Activate to use map controls.">
+          <div data-reveal className={`map-card ${mapLoaded ? 'map-loaded' : ''}`} role="group" aria-label="Map to Geeta Hospitals">
             <iframe title="Geeta Hospitals, Vinnakota Vari Street, Tanuku" src="https://www.google.com/maps?q=16.7572875,81.6771406&z=17&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" onLoad={() => setMapLoaded(true)} />
-            <a className="map-directions" href={DIRECTIONS} target="_blank" rel="noopener noreferrer" aria-label="Get directions to Geeta Hospitals in Google Maps" onClick={event => event.stopPropagation()}><MapPin size={17} />Go to location</a>
+            <a className="map-directions" href={DIRECTIONS} target="_blank" rel="noopener noreferrer" aria-label="Get directions to Geeta Hospitals in Google Maps"><MapPin size={17} />Go to location</a>
           </div>
           <div className="visit-actions" data-reveal><a className="button primary" href={PHONE}><Phone size={17} />Call now</a><a className="button outline" href={DIRECTIONS} target="_blank" rel="noopener noreferrer"><MapPin size={17} />Get directions <ArrowUpRight size={15} /></a></div>
         </div>
@@ -665,15 +664,15 @@ function FAQ() {
 function Footer() {
   const footerRef = useRevealGroup<HTMLElement>();
   const scroll = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  const currentYear = new Date().getFullYear() || 2026;
   return <footer ref={footerRef} className="footer">
     <div className="container">
       <div className="footer-grid">
         <div data-reveal><div className="footer-brandrow"><Brand footer /></div><p className="footer-muted">Tanuku, West Godavari, Andhra Pradesh</p><p className="footer-muted">Run by Sri Geeta Health Care Private Limited</p></div>
         <div data-reveal><h3>Explore</h3><div className="footer-links"><a href="#services" onClick={e => {e.preventDefault();scroll('services');}}>Services</a><a href="#doctors" onClick={e => {e.preventDefault();scroll('doctors');}}>Doctors</a><a href="#visit" onClick={e => {e.preventDefault();scroll('visit');}}>Visit us</a><a href="#gallery" onClick={e => {e.preventDefault();scroll('gallery');}}>Gallery</a><a href="#faq" onClick={e => {e.preventDefault();scroll('faq');}}>FAQs</a></div></div>
-        <div data-reveal><h3>Connect</h3><div className="footer-links"><a className="button outline footer-action" href={PHONE}><Phone size={16} />Call now</a><a className="button outline footer-action" href={DIRECTIONS} target="_blank" rel="noopener noreferrer"><MapPin size={16} />Get directions <ArrowUpRight size={14} /></a><a href="mailto:geetahospitals@gmail.com">geetahospitals@gmail.com</a><span className="footer-muted">{ADDRESS}</span></div></div>
+        <div data-reveal><h3>Connect</h3><div className="footer-links"><a className="button outline footer-action" href={PHONE}><Phone size={16} />Call now</a><a className="button outline footer-action" href={DIRECTIONS} target="_blank" rel="noopener noreferrer"><MapPin size={16} />Get directions <ArrowUpRight size={14} /></a><a href="mailto:geetahospitals@gmail.com">geetahospitals@gmail.com</a></div></div>
       </div>
-      <div className="crisis" data-reveal><h3>If you are in crisis:</h3><span><strong>Tele-MANAS</strong>, <strong>14416</strong> (free, 24 hours). For a medical emergency, call <a href={PHONE}>08819-224246</a> (24/7) or <a href="tel:112">112</a>.</span></div>
-      <div className="footer-bottom"><span>Information only. This website does not replace a consultation or emergency care.</span><span>© Geeta Hospitals · Tanuku</span></div>
+      <p className="footer-copyright">&copy; {currentYear || 2026} Geeta Hospitals | geetahospitalstanuku.com. All rights reserved.</p>
     </div>
   </footer>;
 }
