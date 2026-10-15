@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Geeta Hospitals"
+description = "A responsive information and contact website for Geeta Hospitals in Tanuku, helping visitors explore women's and eye care services, meet the doctors, check outpatient hours, and find emergency and visit details."
+version = "1.0.0"
+id = "artifacts/geeta-hospitals"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25966
+
+[services.development]
+run = "pnpm --filter @workspace/geeta-hospitals run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/geeta-hospitals", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/geeta-hospitals/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25966"
+BASE_PATH = "/"
